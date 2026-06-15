@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunil Pandey — GTM leader who ships AI products</title>
+<meta name="description" content="Sunil Pandey leads go-to-market for HPE's private cloud portfolio and builds AI products. InsightPath, AgentCI, ActDesk AI, RedactLocal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FBFBF9;
+    --ink: #1B2430;
+    --ink-soft: #4A5568;
+    --rule: #DDDED8;
+    --signal: #C25E00;
+    --tag-live: #0B6B3A;
+    --tag-shipped: #1D4ED8;
+    --tag-internal: #6B5B95;
+    --tag-dev: #8A6D00;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --display: "Space Grotesk", sans-serif;
+    --body: "Inter", -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header { padding: 88px 0 64px; }
+  .kicker {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--signal);
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  .hero-sub {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 56ch;
+  }
+  .hero-sub strong { color: var(--ink); font-weight: 600; }
+
+  /* Section labels */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 8px;
+  }
+
+  /* Ship log */
+  .log { list-style: none; }
+  .entry {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .entry:last-child { border-bottom: none; }
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .entry-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .tag.live      { color: var(--tag-live); background: #E7F3EC; }
+  .tag.shipped   { color: var(--tag-shipped); background: #E8EEFC; }
+  .tag.internal  { color: var(--tag-internal); background: #EFEBF6; }
+  .tag.dev       { color: var(--tag-dev); background: #F6F0DC; }
+
+  .entry p { color: var(--ink-soft); margin-bottom: 12px; max-width: 62ch; }
+  .entry p strong { color: var(--ink); font-weight: 600; }
+
+  .tech {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 14px 0;
+  }
+  .entry-links { margin-top: 16px; }
+  .entry-links a, .placeholder {
+    font-family: var(--mono);
+    font-size: 14px;
+    margin-right: 20px;
+  }
+  a { color: var(--signal); text-decoration: none; border-bottom: 1px solid #E8C9A8; }
+  a:hover { border-bottom-color: var(--signal); }
+  a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
+  .placeholder {
+    color: #9AA0A6;
+    background: #F1F1ED;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px dashed #C9CBC2;
+  }
+
+  /* Writing */
+  .writing { padding: 56px 0 8px; }
+  .post-list { list-style: none; margin-top: 24px; }
+  .post-list li { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .post-list li:last-child { border-bottom: none; }
+  .post-title { font-weight: 600; color: var(--ink); }
+  .post-note { font-size: 15px; color: var(--ink-soft); display: block; margin-top: 2px; }
+
+  /* Footer */
+  footer {
+    margin-top: 72px;
+    padding: 40px 0 72px;
+    border-top: 2px solid var(--ink);
+  }
+  .footer-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    font-family: var(--mono);
+    font-size: 14px;
+  }
+  .footer-note {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 540px) {
+    header { padding: 56px 0 44px; }
+    .entry { padding: 32px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">SUNIL PANDEY · SAN JOSE, CA</div>
+    <h1>I'm a go-to-market leader running HPE's private cloud portfolio. I'm also completely AI-pilled and I love building.</h1>
+    <p class="hero-sub">I build constantly. These are the selected ones, each shipped somewhere real: an open source AI agent testing framework on <strong>PyPI</strong>, an AI app live on the <strong>Shopify App Store</strong>, a privacy-first Mac app you can download right now, and an open source enterprise <strong>RAG pipeline</strong>.</p>
+  </header>
+
+  <main>
+    <div class="section-label">Selected projects</div>
+    <ul class="log">
+
+      <li class="entry">
+        <div class="entry-head">
+          <span class="entry-name">InsightPath</span>
+          <span class="tag shipped">OPEN SOURCE · GITHUB</span>
+        </div>
+        <p>An enterprise-grade RAG pipeline for question answering over enterprise PDFs. Keeping retrieval quality high on real, messy documents is the actual problem, so this is built like infrastructure: <strong>Qdrant vector search, Celery workers for async ingestion, and an LLM evaluation framework</strong> that scores retrieval quality instead of guessing at it.</p>
+        <p>The eval framework is the part I care about most. If you can't measure retrieval quality, you can't improve it.</p>
+        <div class="tech">Python · Qdrant · Celery · RAG · LLM evaluation metrics</div>
+        <div class="entry-links">
+          <a href="https://github.com/suniel12/InsightPath">GitHub repo</a>
+        </div>
+      </li>
+
+      <li class="entry">
+        <div class="entry-head">
+          <span class="entry-name">AgentCI</span>
+          <span class="tag shipped">SHIPPED · PYPI</span>
+        </div>
+        <p>AI agents break quietly. A prompt tweak or model update changes behavior and nobody notices until it's in production. AgentCI is a pytest-style regression testing framework for agents: it records traces, detects behavioral and cost regressions, and runs in CI/CD like any other test suite. <strong>No LLM-as-judge required</strong>, so results are deterministic and cheap.</p>
+        <p>Open source, Apache 2.0, published on PyPI as <strong>ciagent</strong>.</p>
+        <div class="tech">Python · trace-based regression detection · cost guardrails · CI/CD-native</div>
+        <div class="entry-links">
+          <a href="https://github.com/suniel12/AgentCI">GitHub repo</a>
+          <a href="https://pypi.org/project/ciagent/">PyPI: ciagent</a>
+        </div>
+      </li>
+
+      <li class="entry">
+        <div class="entry-head">
+          <span class="entry-name">ActDesk AI</span>
+          <span class="tag live">LIVE · SHOPIFY APP STORE</span>
+        </div>
+        <p>AI customer service for Shopify merchants. Most tools in this space charge per conversation, which punishes merchants for growing. Approved and live on the Shopify App Store.</p>
+        <p>I built the GTM too: an automated Reddit pipeline that surfaces merchants asking for help, and a free store scanner that grades how well a storefront answers customer questions. The scanner has graded 100+ stores so far.</p>
+        <div class="tech">Shopify app · LLM customer support · automated lead qualification</div>
+        <div class="entry-links">
+          <a href="https://apps.shopify.com/actdeskai">Shopify App Store</a>
+        </div>
+      </li>
+
+      <li class="entry">
+        <div class="entry-head">
+          <span class="entry-name">RedactLocal</span>
+          <span class="tag shipped">SHIPPED · MAC · v0.6</span>
+        </div>
+        <p>Document redaction for lawyers where <strong>nothing ever leaves the machine</strong>. Cloud redaction tools ask firms to upload privileged documents to someone else's server, which is exactly the problem. RedactLocal runs entirely on-device.</p>
+        <p>Under the hood it's a four-layer pipeline: regex and checksum matching, then GLiNER zero-shot NER, then optional Gemma 4 validation, then mandatory human review. Policy packs cover FRCP 5.2, HIPAA, GLBA, and immigration documents.</p>
+        <div class="tech">Gemma 4 · SwiftUI · llama.cpp · GLiNER NER · fully on-device</div>
+        <div class="entry-links">
+          <a href="https://github.com/suniel12/RedactLocal-releases/releases/latest">Download for Mac</a>
+        </div>
+      </li>
+
+    </ul>
+
+    <div class="section-label" style="margin-top:48px;">Experiments</div>
+    <ul class="post-list">
+      <li>
+        <span class="post-title"><a href="https://github.com/suniel12/mintollm">MintOLLM</a></span>
+        <span class="post-note">Privacy-first financial intelligence app running on-device Small Language Models. Real bank integration, nothing leaves the device.</span>
+      </li>
+      <li>
+        <span class="post-title"><a href="https://github.com/suniel12/InsightPic">InsightPic</a></span>
+        <span class="post-note">iOS app using Apple Vision Framework and Core ML to cluster trip photos and surface the best shots automatically.</span>
+      </li>
+      <li>
+        <span class="post-title"><a href="https://github.com/suniel12/InsightAICamp">InsightAICamp</a></span>
+        <span class="post-note">Multi-modal pipeline that turns slide decks into fully narrated video courses.</span>
+      </li>
+    </ul>
+
+    <!-- WRITING SECTION: re-enable when 3+ posts exist. Do not ship a section with one post.
+    <section class="writing">
+      <div class="section-label">Writing</div>
+      <ul class="post-list">
+        <li>
+          <span class="post-title"><span class="placeholder">[LINK: LinkedIn post 1 title]</span></span>
+          <span class="post-note">One line on what the post covers and which project it connects to.</span>
+        </li>
+        <li>
+          <span class="post-title"><span class="placeholder">[LINK: LinkedIn post 2 title]</span></span>
+          <span class="post-note">One line on what the post covers and which project it connects to.</span>
+        </li>
+        <li>
+          <span class="post-title"><span class="placeholder">[LINK: LinkedIn post 3 title]</span></span>
+          <span class="post-note">One line on what the post covers and which project it connects to.</span>
+        </li>
+      </ul>
+    </section>
+    -->
+  </main>
+
+  <footer>
+    <div class="footer-line">
+      <a href="mailto:sunilpandey1245@gmail.com">sunilpandey1245@gmail.com</a>
+      <a href="https://github.com/suniel12">github.com/suniel12</a>
+      <a href="https://www.linkedin.com/in/sunil-pandey-phd/">linkedin.com/in/sunil-pandey-phd</a>
+    </div>
+    <p class="footer-note">Princeton PhD in Electrical Engineering. Ex-McKinsey. Co-founded a telemedicine platform in Nepal that grew to 3,000+ weekly patient calls.</p>
+  </footer>
+
+</div>
+</body>
+</html>
