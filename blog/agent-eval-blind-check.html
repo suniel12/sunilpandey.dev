@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My AI agent scored 96%. Then I graded its work by hand. — Sunil Pandey</title>
+<meta name="description" content="An automated eval scored my Shopify support agent at 96%. A blind hand-check of 58 answers found 1 in 7 passes were real failures. Here's what that revealed about LLM judges, and how deterministic checks closed the gap.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://sunilpandey.dev/blog/agent-eval-blind-check.html">
+<meta property="og:title" content="My AI agent scored 96%. Then I graded its work by hand.">
+<meta property="og:description" content="An automated eval scored my Shopify support agent at 96%. A blind hand-check of 58 answers found 1 in 7 passes were real failures.">
+<meta property="og:image" content="https://sunilpandey.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="My AI agent scored 96%. Then I graded its work by hand.">
+<meta name="twitter:description" content="An automated eval scored my Shopify support agent at 96%. A blind hand-check of 58 answers found 1 in 7 passes were real failures.">
+<meta name="twitter:image" content="https://sunilpandey.dev/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FBFBF9;
+    --ink: #1B2430;
+    --ink-soft: #4A5568;
+    --rule: #DDDED8;
+    --signal: #C25E00;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --display: "Space Grotesk", sans-serif;
+    --body: "Inter", -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  header { padding: 64px 0 40px; }
+  .back-link {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    display: inline-block;
+    margin-bottom: 28px;
+  }
+  .kicker {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--signal);
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 38px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .byline {
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+
+  article { padding-bottom: 24px; }
+  article p { margin-bottom: 20px; max-width: 66ch; }
+  article h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    margin: 40px 0 16px;
+  }
+  article ul, article ol { margin: 0 0 20px 22px; max-width: 66ch; }
+  article li { margin-bottom: 8px; }
+  article strong { color: var(--ink); font-weight: 600; }
+  article em { color: var(--ink-soft); }
+  article hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 40px 0;
+  }
+  .closing-note {
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+
+  a { color: var(--signal); text-decoration: none; border-bottom: 1px solid #E8C9A8; }
+  a:hover { border-bottom-color: var(--signal); }
+  a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
+
+  footer {
+    margin-top: 56px;
+    padding: 40px 0 72px;
+    border-top: 2px solid var(--ink);
+  }
+  .footer-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    font-family: var(--mono);
+    font-size: 14px;
+  }
+  .footer-note {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 540px) {
+    header { padding: 48px 0 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="back-link" href="/">&larr; sunilpandey.dev</a>
+    <div class="kicker">WRITING</div>
+    <h1>My AI agent scored 96%. Then I graded its work by hand.</h1>
+    <p class="byline">Sunil Pandey</p>
+  </header>
+
+  <main>
+    <article>
+      <p>AI agents fail for reasons we never dealt with in traditional software.</p>
+
+      <p>In standard software, correctness lives in the code. You write it, you verify it, you trust it. Review the code and you've reviewed every result it will ever produce.</p>
+
+      <p>Agents don't work like that. The correctness isn't in the code anymore; it's in every individual output. Even a capable agent will turn in bad work for reasons you couldn't predict from the prompt. You can't just trust the code. You have to inspect the work.</p>
+
+      <p>This is the story of what I found when I inspected mine.</p>
+
+      <h2>The setup</h2>
+
+      <p>I run an AI customer support agent for a Shopify store. It answers questions about orders, shipping, returns, and products, pulling from the store's policies and live catalog.</p>
+
+      <p>To evaluate it, I built what most teams build: an automated eval. A set of golden questions with known correct answers, run against the agent, graded by an LLM judge. I deliberately used a different vendor's model for the judge than the agent, to avoid a model grading its own family.</p>
+
+      <p>The judge isn't a single "rate this 1 to 5" prompt. It decomposes each answer into factual claims, verifies each claim against the context the agent retrieved, checks whether the answer addressed the customer's need, and combines those into a score. Temperature zero, structured outputs. A reasonably serious setup.</p>
+
+      <p>Across 17 runs and 1,234 graded responses, the agent scored 96%.</p>
+
+      <p>That's a number you'd ship on. Instead, I decided to check the checker.</p>
+
+      <h2>The blind check</h2>
+
+      <p>I pulled 58 answers from runs that shared one frozen copy of the knowledge base, so there was no ambiguity about what the agent should have known. 53 of them were answers the judge had passed, 5 it had failed. Mostly passes on purpose: you can only catch a false pass by re-grading something the judge approved.</p>
+
+      <p>I graded each one by hand, against the knowledge base, before looking at the judge's verdict. Three things fell out.</p>
+
+      <h2>1. A stable score is not a stable system</h2>
+
+      <p>I ran the identical eval three times, same questions, same knowledge base, hours apart. The aggregate scores: 95%, 96%, 96%. Rock solid.</p>
+
+      <p>Underneath, nothing held still. All 62 answers came back worded differently on every run. Four changed verdicts. Two flipped hard between pass and fail.</p>
+
+      <p>One example carries the whole finding. The question was "how much does shipping cost?" The rate was in the knowledge base: $9.95 flat, free over $100. Across the three runs the agent answered:</p>
+
+      <ul>
+        <li>Run 1: "our knowledge base doesn't include shipping rates" — wrong</li>
+        <li>Run 2: "$9.95 under $100, free over $100" — correct</li>
+        <li>Run 3: "I don't have access to shipping rates" — wrong</li>
+      </ul>
+
+      <p>Right once in three tries, with the answer sitting there the whole time. The judge passed all three.</p>
+
+      <p>The aggregate held steady because the errors moved around, not because the system behaved the same twice. If your eval score is reproducible, that tells you less than you think. Rerun the eval and diff the answers, not the score.</p>
+
+      <h2>2. The LLM judge shares the agent's blind spots</h2>
+
+      <p>I agreed with my judge on 76% of the 58 answers. That sounds fine until you look at where we disagreed, because the misses ran one direction: the judge passed bad answers about three times as often as it failed good ones.</p>
+
+      <p>8 of the 53 answers the judge passed were real failures. Roughly 1 in 7. Every one of them was fluent, polite, and formatted like a right answer. No error, no alert, nothing in the logs. In production monitoring, all 8 count as wins.</p>
+
+      <p>And they clustered exactly where the agent was most confident: hard product facts. Twice, the agent told a customer we didn't sell an entire product category. The catalog was full of them.</p>
+
+      <p>Here's the mechanism. The judge grades an answer on faithfulness to the context the agent retrieved. When the agent's product search came up empty, the agent asserted the products didn't exist, and the judge, looking at that same empty context, found nothing to contradict. My judge's code literally treats "no evidence" as "no factual errors detected." A reviewer with the same inputs as the worker is not an objective reviewer.</p>
+
+      <p>The obvious objection: just connect the judge to the live catalog. Partly fair. But it would catch these failures only by comparing specific claims against known facts, and once you're doing that, you don't need an LLM to do it. Which brings us to the third finding.</p>
+
+      <h2>3. Every critical failure was checkable without an LLM</h2>
+
+      <p>All 8 of the judge's misses involved a hard fact: a product that exists, a price, a shipping rate, a restock date. Facts you can check with code.</p>
+
+      <p>So I wrote those checks, from the knowledge base and the golden answers only, the way you'd write them in CI before ever seeing an output. Never reverse-engineered from the failures. Then I re-ran all 58 answers through <a href="https://pypi.org/project/ciagent/">ciagent</a>, the eval tool I built, which runs deterministic checks first and only falls back to an LLM judge when there's nothing concrete to check.</p>
+
+      <p>The deterministic layer caught all 8 failures my judge had passed. Zero LLM calls. A confident "I don't have that information" fails a presence check the same way a wrong price does.</p>
+
+      <p>Full honesty about the limits, because they're the point:</p>
+
+      <ul>
+        <li>Only 36 of the 58 answers contained a fact that code can check. The other 22 genuinely need judgment, from an LLM judge or a human. Code shrinks the blind spot. Nothing closes it.</li>
+        <li>The checks flagged 2 answers I had passed as a human. Both were the check being stricter than me, not wrong, but that's the cost side of the ledger.</li>
+        <li>This works because I had golden answers with hard facts in them. No goldens, no deterministic checks.</li>
+      </ul>
+
+      <p>That run is why ciagent works the way it does: deterministic checks first, an LLM judge as the last resort, and golden tasks graded on correctness, tool path, and cost, so an agent that drifts fails the build instead of surfacing three days later in a customer complaint.</p>
+
+      <h2>Was it ever really 96%?</h2>
+
+      <p>One more piece of arithmetic the blind check makes possible. If roughly 1 in 7 of the judge's passes were failures, and a few of its fails were actually fine, the human-verified score on this slice lands somewhere in the low-to-mid 80s. Not 96.</p>
+
+      <p>Small sample, wide error bars. But the direction is certain, and it reframes the shipping question entirely. "Is 96% good enough to ship?" assumes the 96% is real. Mine wasn't. Anyone shipping on an unaudited LLM judge doesn't know their number either.</p>
+
+      <h2>The shape of the wrongness</h2>
+
+      <p>Humans make mistakes in front of customers every day, and business survives. That's because human error has a shape we know how to manage: it clusters in predictable places, and people usually know when they're unsure. They hedge, they escalate, they ask.</p>
+
+      <p>My agent's failures had none of that. They were silent, confident, and different on every run.</p>
+
+      <p>That's the real gap, and it's why "review the work" isn't a slogan. Agents are already in front of customers, shipped on scores like my 96%. The error rate isn't what worries me. It's that we're still learning how to see the errors.</p>
+
+      <hr>
+
+      <p class="closing-note"><em>The eval data: 1,234 graded responses across 17 runs; blind sample of 58 from a fixed knowledge-base slice; all checks written from golden answers before seeing agent output. Questions about the method, ask me.</em></p>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-line">
+      <a href="mailto:sunilpandey1245@gmail.com">sunilpandey1245@gmail.com</a>
+      <a href="https://github.com/suniel12">github.com/suniel12</a>
+      <a href="https://www.linkedin.com/in/sunil-pandey-phd/">linkedin.com/in/sunil-pandey-phd</a>
+    </div>
+    <p class="footer-note">Princeton PhD in Electrical Engineering. Ex-McKinsey. Co-founded a telemedicine platform in Nepal that grew to 3,000+ weekly patient calls.</p>
+  </footer>
+
+</div>
+</body>
+</html>
