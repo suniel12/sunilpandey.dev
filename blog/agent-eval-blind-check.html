@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My AI agent scored 96%. Then I graded its work by hand. — Sunil Pandey</title>
+<title>What a 96% eval score was hiding — Sunil Pandey</title>
 <meta name="description" content="An automated eval scored my Shopify support agent at 96%. A blind hand-check of 58 answers found 1 in 7 passes were real failures. Here's what that revealed about LLM judges, and how deterministic checks closed the gap.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://sunilpandey.dev/blog/agent-eval-blind-check.html">
-<meta property="og:title" content="My AI agent scored 96%. Then I graded its work by hand.">
+<meta property="og:title" content="What a 96% eval score was hiding">
 <meta property="og:description" content="An automated eval scored my Shopify support agent at 96%. A blind hand-check of 58 answers found 1 in 7 passes were real failures.">
 <meta property="og:image" content="https://sunilpandey.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="My AI agent scored 96%. Then I graded its work by hand.">
+<meta name="twitter:title" content="What a 96% eval score was hiding">
 <meta name="twitter:description" content="An automated eval scored my Shopify support agent at 96%. A blind hand-check of 58 answers found 1 in 7 passes were real failures.">
 <meta name="twitter:image" content="https://sunilpandey.dev/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,6 +89,22 @@
     border-top: 1px solid var(--rule);
     margin: 40px 0;
   }
+  article figure {
+    margin: 8px 0 28px;
+  }
+  article figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+  }
+  article figcaption {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 10px;
+  }
   .closing-note {
     font-size: 15px;
     color: var(--ink-soft);
@@ -127,7 +143,7 @@
   <header>
     <a class="back-link" href="/">&larr; sunilpandey.dev</a>
     <div class="kicker">WRITING</div>
-    <h1>My AI agent scored 96%. Then I graded its work by hand.</h1>
+    <h1>What a 96% eval score was hiding</h1>
     <p class="byline">Sunil Pandey</p>
   </header>
 
@@ -176,6 +192,11 @@
       <p>Right once in three tries, with the answer sitting there the whole time. The judge passed all three.</p>
 
       <p>The aggregate held steady because the errors moved around, not because the system behaved the same twice. If your eval score is reproducible, that tells you less than you think. Rerun the eval and diff the answers, not the score.</p>
+
+      <figure>
+        <img src="/blog/img/eval-blind-check-og.png" alt="Terminal output showing three identical eval runs scoring 95%, 96%, and 96% while all 62 answers came back worded differently and 4 verdicts flipped. The shipping-cost question is answered wrong, right, then wrong across the three runs, and the judge passes all three." width="2400" height="1260" loading="lazy">
+        <figcaption>Same 62 questions, same knowledge base, three runs hours apart. The score barely moved. The answers did.</figcaption>
+      </figure>
 
       <h2>2. The LLM judge shares the agent's blind spots</h2>
 
